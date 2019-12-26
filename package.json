@@ -29,7 +29,7 @@
     "typescript": "^3.7.4"
   },
   "bin": {
-    "lines-to-matrix": "./bin/lines-to-matrix.js"
+    "l2m": "./bin/lines-to-matrix.js"
   },
   "dependencies": {
     "csv": "^5.3.1",
