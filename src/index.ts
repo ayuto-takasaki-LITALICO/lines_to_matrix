@@ -11,6 +11,10 @@ const stringifyCsvAsync = util.promisify<any, any>(stringify);
 type MatrixCellData = string | number | boolean | null;
 type MatrixRowData = MatrixCellData[];
 type MatrixData = MatrixRowData[];
+enum Order {
+  asc = "asc",
+  desc = "desc"
+}
 
 const createEmptyMatrix = (
   width: number,
@@ -23,19 +27,27 @@ const appendMatrixHeader = (
   Y: MatrixCellData[]
 ) => [[null, ...X], ...matrix.map((it, idx) => [Y[idx], ...it])];
 
-const linesToMatrix = (lines: string[], xPos = 0, yPos = 1, vPos = 2) => {
-  const [X, Y] = [_.uniq(_.map(lines, xPos)), _.uniq(_.map(lines, yPos))];
-  const matrix = createEmptyMatrix(X.length, Y.length);
-  lines.forEach(it => {
-    matrix[Y.indexOf(it[yPos])][X.indexOf(it[xPos])] = it[vPos];
+function linesToMatrix(
+  source: MatrixData,
+  { y = 1, x = 2, v = 3, xOrder = Order.asc, yOrder = Order.asc } = {}
+): MatrixData {
+  const sorted = _.orderBy(source, [
+    [y, yOrder],
+    [x, xOrder]
+  ]);
+  const X = _.uniq(_.map(sorted, x));
+  const Y = _.uniq(_.map(sorted, y));
+  const matrix = createEmptyMatrix(X.length, Y.length, null);
+  sorted.forEach((it) => {
+    matrix[Y.indexOf(it[y])][X.indexOf(it[x])] = it[v];
   });
   return appendMatrixHeader(matrix, X, Y);
-};
+}
+
 (async function main() {
   const path = process.argv[2];
   const content = await readFileAsync(path, "utf8");
   const csvLines = await parseCsvAsync(content);
-  const csvLinesSorted = _.orderBy(csvLines, [0, 1]);
-  const matrix = linesToMatrix(csvLinesSorted, 0, 1, 2);
+  const matrix = linesToMatrix(csvLines, {y: 0, x: 1, v: 2});
   console.log(await stringifyCsvAsync(matrix));
 })();
