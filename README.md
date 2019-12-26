@@ -64,13 +64,13 @@ l2m -y 1 -x 2 -v 4 sample.csv
 縦軸は降順に、横軸は昇順に並び替える場合：
 
 ```
-l2m --order-y desc --order-x asc sample.csv
+l2m --y-order desc --x-order asc sample.csv
 ```
 
 省略形式：
 
 ```
-l2m -oy desc -ox asc sample.csv
+l2m -yo desc -xo asc sample.csv
 ```
 
 ## 開発
