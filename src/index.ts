@@ -18,10 +18,7 @@ type MatrixBuilderOptions = {
   xOrder: Order;
   yOrder: Order;
 };
-enum Order {
-  asc = "asc",
-  desc = "desc"
-}
+type Order = "asc" | "desc";
 
 class MatrixBuilder {
   matrix: MatrixData;
@@ -87,8 +84,8 @@ class MatrixBuilder {
     y: 0,
     x: 1,
     v: 2,
-    xOrder: Order.asc,
-    yOrder: Order.asc
+    xOrder: "asc",
+    yOrder: "asc"
   }).build();
   const result = await stringifyCsvAsync(matrix);
   process.stdout.write(result);
