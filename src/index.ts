@@ -11,43 +11,88 @@ const stringifyCsvAsync = util.promisify<any, any>(stringify);
 type MatrixCellData = string | number | boolean | null;
 type MatrixRowData = MatrixCellData[];
 type MatrixData = MatrixRowData[];
+type MatrixOptions = {
+  y: number;
+  x: number;
+  v: number;
+  xOrder: Order;
+  yOrder: Order;
+};
 enum Order {
   asc = "asc",
   desc = "desc"
 }
 
-const createEmptyMatrix = (
-  width: number,
-  height: number,
-  initialValue = null
-) => _.times(height, () => new Array(width).fill(initialValue));
-const appendMatrixHeader = (
-  matrix: MatrixData,
-  X: MatrixCellData[],
-  Y: MatrixCellData[]
-) => [[null, ...X], ...matrix.map((it, idx) => [Y[idx], ...it])];
+class Matrix {
+  matrix: MatrixData;
+  X: MatrixRowData;
+  Y: MatrixRowData;
+  source: MatrixData;
+  options: MatrixOptions;
 
-function linesToMatrix(
-  source: MatrixData,
-  { y = 1, x = 2, v = 3, xOrder = Order.asc, yOrder = Order.asc } = {}
-): MatrixData {
-  const sorted = _.orderBy(source, [
-    [y, yOrder],
-    [x, xOrder]
-  ]);
-  const X = _.uniq(_.map(sorted, x));
-  const Y = _.uniq(_.map(sorted, y));
-  const matrix = createEmptyMatrix(X.length, Y.length, null);
-  sorted.forEach((it) => {
-    matrix[Y.indexOf(it[y])][X.indexOf(it[x])] = it[v];
-  });
-  return appendMatrixHeader(matrix, X, Y);
+  constructor(source: MatrixData, options: MatrixOptions) {
+    this.source = source;
+    this.options = options;
+    this.matrix = [];
+    this.X = [];
+    this.Y = [];
+  }
+
+  toMatrix(): MatrixData {
+    this.init();
+    this.readLines();
+    return this.exportWithHeader();
+  }
+
+  init(): void {
+    const sorted = this.sortedData;
+    this.X = _.uniq(_.map(sorted, this.options.x));
+    this.Y = _.uniq(_.map(sorted, this.options.y));
+    this.matrix = this.createEmptyMatrix(this.X.length, this.Y.length, null);
+  }
+
+  readLines(): void {
+    this.source.forEach(row => {
+      const yTitle = row[this.options.y];
+      const xTitle = row[this.options.x];
+      const value = row[this.options.v];
+      this.matrix[this.Y.indexOf(yTitle)][this.X.indexOf(xTitle)] = value;
+    });
+  }
+
+  createEmptyMatrix(
+    width: number,
+    height: number,
+    initialValue: any
+  ): MatrixData {
+    return _.times(height, () => new Array(width).fill(initialValue));
+  }
+
+  exportWithHeader(): MatrixData {
+    return [
+      [null, ...this.X],
+      ...this.matrix.map((it, index) => [this.Y[index], ...it])
+    ];
+  }
+
+  get sortedData(): MatrixData {
+    return _.orderBy(this.source, [
+      [this.options.y, this.options.yOrder],
+      [this.options.x, this.options.xOrder]
+    ]);
+  }
 }
 
 (async function main() {
   const path = process.argv[2];
   const content = await readFileAsync(path, "utf8");
   const csvLines = await parseCsvAsync(content);
-  const matrix = linesToMatrix(csvLines, {y: 0, x: 1, v: 2});
+  const matrix = new Matrix(csvLines, {
+    y: 0,
+    x: 1,
+    v: 2,
+    xOrder: Order.asc,
+    yOrder: Order.asc
+  }).toMatrix();
   console.log(await stringifyCsvAsync(matrix));
 })();
