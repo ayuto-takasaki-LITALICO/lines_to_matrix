@@ -17,6 +17,7 @@ type MatrixBuilderOptions = {
   v: number;
   xOrder: Order;
   yOrder: Order;
+  naAs: string;
 };
 type Order = "asc" | "desc";
 
@@ -49,7 +50,9 @@ class MatrixBuilder {
     const sorted = this.sortedData;
     this.X = _.uniq(_.map(sorted, this.options.x));
     this.Y = _.uniq(_.map(sorted, this.options.y));
-    this.matrix = _.times(this.Y.length, () => new Array(this.X.length).fill(null));
+    this.matrix = _.times(this.Y.length, () =>
+      new Array(this.X.length).fill(this.options.naAs)
+    );
   }
 
   readLines(): void {
@@ -85,7 +88,8 @@ class MatrixBuilder {
     x: 1,
     v: 2,
     xOrder: "asc",
-    yOrder: "asc"
+    yOrder: "asc",
+    naAs: ""
   }).build();
   const result = await stringifyCsvAsync(matrix);
   process.stdout.write(result);

@@ -73,6 +73,14 @@ l2m --y-order desc --x-order asc sample.csv
 l2m -yo desc -xo asc sample.csv
 ```
 
+### N/A値の扱い
+
+該当値の存在しない箇所を特定の文字列（例： `NA` ）にしたい場合：
+
+```
+l2m --na-as NA sample.csv
+```
+
 ## 開発
 
 ### ビルド
