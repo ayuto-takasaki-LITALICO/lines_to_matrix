@@ -23,7 +23,7 @@ enum Order {
   desc = "desc"
 }
 
-class Matrix {
+class MatrixBuilder {
   matrix: MatrixData;
   X: MatrixRowData;
   Y: MatrixRowData;
@@ -38,7 +38,7 @@ class Matrix {
     this.Y = [];
   }
 
-  toMatrix(): MatrixData {
+  build(): MatrixData {
     this.init();
     this.readLines();
     return this.exportWithHeader();
@@ -87,12 +87,12 @@ class Matrix {
   const path = process.argv[2];
   const content = await readFileAsync(path, "utf8");
   const csvLines = await parseCsvAsync(content);
-  const matrix = new Matrix(csvLines, {
+  const matrix = new MatrixBuilder(csvLines, {
     y: 0,
     x: 1,
     v: 2,
     xOrder: Order.asc,
     yOrder: Order.asc
-  }).toMatrix();
+  }).build();
   console.log(await stringifyCsvAsync(matrix));
 })();
