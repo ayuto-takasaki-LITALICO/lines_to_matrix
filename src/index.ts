@@ -1,11 +1,12 @@
-const _ = require('lodash');
-const csv = require('csv');
-const fs = require('fs');
-const util = require('util');
+import _ from 'lodash';
+import stringify from 'csv-stringify';
+import parse from 'csv-parse';
+import fs from 'fs';
+import util from 'util';
 
 const readFileAsync = util.promisify(fs.readFile);
-const parseCsvAsync = util.promisify(csv.parse);
-const stringifyCsvAsync = util.promisify(csv.stringify);
+const parseCsvAsync = util.promisify(parse);
+const stringifyCsvAsync = util.promisify(stringify);
 
 type MatrixCellData = string | number | boolean | null;
 type MatrixRowData = MatrixCellData[];
