@@ -25,9 +25,13 @@ enum Order {
 
 class MatrixBuilder {
   matrix: MatrixData;
+
   X: MatrixRowData;
+
   Y: MatrixRowData;
+
   source: MatrixData;
+
   options: MatrixBuilderOptions;
 
   constructor(source: MatrixData, options: MatrixBuilderOptions) {
@@ -48,7 +52,7 @@ class MatrixBuilder {
     const sorted = this.sortedData;
     this.X = _.uniq(_.map(sorted, this.options.x));
     this.Y = _.uniq(_.map(sorted, this.options.y));
-    this.matrix = this.createEmptyMatrix(this.X.length, this.Y.length, null);
+    this.matrix = _.times(this.Y.length, () => new Array(this.X.length).fill(null));
   }
 
   readLines(): void {
@@ -58,14 +62,6 @@ class MatrixBuilder {
       const value = row[this.options.v];
       this.matrix[this.Y.indexOf(yTitle)][this.X.indexOf(xTitle)] = value;
     });
-  }
-
-  createEmptyMatrix(
-    width: number,
-    height: number,
-    initialValue: any
-  ): MatrixData {
-    return _.times(height, () => new Array(width).fill(initialValue));
   }
 
   exportWithHeader(): MatrixData {
@@ -94,5 +90,6 @@ class MatrixBuilder {
     xOrder: Order.asc,
     yOrder: Order.asc
   }).build();
-  console.log(await stringifyCsvAsync(matrix));
+  const result = await stringifyCsvAsync(matrix);
+  process.stdout.write(result);
 })();
