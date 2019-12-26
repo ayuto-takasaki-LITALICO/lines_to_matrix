@@ -14,5 +14,9 @@
   "bugs": {
     "url": "https://github.com/TiAiuto/lines_to_matrix/issues"
   },
-  "homepage": "https://github.com/TiAiuto/lines_to_matrix#readme"
+  "homepage": "https://github.com/TiAiuto/lines_to_matrix#readme",
+  "devDependencies": {
+    "@types/node": "^13.1.0",
+    "typescript": "^3.7.4"
+  }
 }
