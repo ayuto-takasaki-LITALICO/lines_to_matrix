@@ -53,6 +53,20 @@ cat lines.csv | l2m > matrix.csv
 l2m -y 1 -x 3 -v 5 sample.csv
 ```
 
+### 並び替え
+
+縦軸は降順に、横軸は昇順に並び替える場合：
+
+```
+l2m --order-y desc --order-x asc sample.csv
+```
+
+省略形式：
+
+```
+l2m -oy desc -ox asc sample.csv
+```
+
 ## 開発
 
 ### ビルド
