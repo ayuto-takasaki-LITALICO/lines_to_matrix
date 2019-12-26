@@ -5,8 +5,8 @@ import fs from "fs";
 import util from "util";
 
 const readFileAsync = util.promisify(fs.readFile);
-const parseCsvAsync = util.promisify<any, string>(parse);
-const stringifyCsvAsync = util.promisify<any, string>(stringify);
+const parseCsvAsync = util.promisify<any, any>(parse);
+const stringifyCsvAsync = util.promisify<any, any>(stringify);
 
 type MatrixCellData = string | number | boolean | null;
 type MatrixRowData = MatrixCellData[];
