@@ -11,7 +11,7 @@ const stringifyCsvAsync = util.promisify<any, any>(stringify);
 type MatrixCellData = string | number | boolean | null;
 type MatrixRowData = MatrixCellData[];
 type MatrixData = MatrixRowData[];
-type MatrixOptions = {
+type MatrixBuilderOptions = {
   y: number;
   x: number;
   v: number;
@@ -28,9 +28,9 @@ class MatrixBuilder {
   X: MatrixRowData;
   Y: MatrixRowData;
   source: MatrixData;
-  options: MatrixOptions;
+  options: MatrixBuilderOptions;
 
-  constructor(source: MatrixData, options: MatrixOptions) {
+  constructor(source: MatrixData, options: MatrixBuilderOptions) {
     this.source = source;
     this.options = options;
     this.matrix = [];
