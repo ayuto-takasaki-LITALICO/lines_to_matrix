@@ -27,13 +27,13 @@ export const createL2mCommand = (): commander.Command => {
     )
     .option(
       "--y-order <order>",
-      "縦方向のラベルの並び順を指定します",
+      "縦方向のラベルの並び順を指定します（asc: 昇順，desc: 降順）",
       /^(asc|desc)$/i,
       null
     )
     .option(
       "--x-order <order>",
-      "横方向のラベルの並び順を指定します",
+      "横方向のラベルの並び順を指定します（asc: 昇順，desc: 降順）",
       /^(asc|desc)$/i,
       null
     )
