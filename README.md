@@ -1,4 +1,4 @@
-# lines_to_matrix
+# l2m(lines_to_matrix)
 
 ## 概要
 
@@ -33,22 +33,22 @@
 
 ## Setup
 
-（書く）
+```
+npm install -g l2m
+```
 
 ## Usages
-
-（TODO：オプション指定はこれから実装する。）
 
 ### ファイルからCSVを読み込む
 
 ```
-l2m lines.csv > matrix.csv
+l2m lines.csv
 ```
 
 ### 標準入力からCSVを読み込む
 
 ```
-cat lines.csv | l2m > matrix.csv
+cat lines.csv | l2m
 ```
 
 ### 列情報の指定
