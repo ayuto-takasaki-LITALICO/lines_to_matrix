@@ -7,8 +7,8 @@ export type MatrixBuilderOptions = {
   yPosition: number;
   xPosition: number;
   valuePosition: number;
-  xOrder?: Order;
-  yOrder?: Order;
+  xOrder: Order | null;
+  yOrder: Order | null;
   naAs: string;
 };
 export type Order = "asc" | "desc";
