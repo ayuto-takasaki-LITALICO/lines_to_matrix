@@ -1,7 +1,7 @@
 {
   "name": "l2m",
   "version": "1.0.0",
-  "description": "",
+  "description": "各行から行と列の集合と対応する値を抽出して、行列状に出力します。",
   "main": "dist/index.js",
   "scripts": {
     "test": "jest test",
@@ -39,5 +39,6 @@
     "csv-parse": "^4.8.3",
     "csv-stringify": "^5.3.6",
     "lodash": "^4.17.15"
-  }
+  },
+  "license": "MIT"
 }
