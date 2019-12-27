@@ -11,19 +11,19 @@ export const createL2mCommand = (): commander.Command => {
       "-y, --y-position <position>",
       "縦方向のラベルを表す列の位置を指定します",
       /^\d+$/i,
-      "0"
+      0
     )
     .option(
       "-x, --x-position <position>",
       "横方向のラベルを表す列の位置を指定します",
       /^\d+$/i,
-      "1"
+      1
     )
     .option(
       "-v, --value-position <position>",
       "値を表す列の位置を指定します",
       /^\d+$/i,
-      "2"
+      2
     )
     .option(
       "--y-order <order>",
