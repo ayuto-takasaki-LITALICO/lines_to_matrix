@@ -1,5 +1,5 @@
 {
-  "name": "lines_to_matrix",
+  "name": "l2m",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
