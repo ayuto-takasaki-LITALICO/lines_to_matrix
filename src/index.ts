@@ -15,8 +15,8 @@ type MatrixBuilderOptions = {
   y: number;
   x: number;
   v: number;
-  xOrder: Order;
-  yOrder: Order;
+  xOrder?: Order;
+  yOrder?: Order;
   naAs: string;
 };
 type Order = "asc" | "desc";
@@ -42,17 +42,36 @@ class MatrixBuilder {
 
   build(): MatrixData {
     this.init();
+    this.sortLabels();
     this.readLines();
     return this.exportWithHeader();
   }
 
   init(): void {
-    const sorted = this.sortedData;
-    this.X = _.uniq(_.map(sorted, this.options.x));
-    this.Y = _.uniq(_.map(sorted, this.options.y));
+    this.X = _.uniq(_.map(this.source, this.options.x));
+    this.Y = _.uniq(_.map(this.source, this.options.y));
     this.matrix = _.times(this.Y.length, () =>
       new Array(this.X.length).fill(this.options.naAs)
     );
+  }
+
+  sortLabels(): void {
+    if (this.options.xOrder) {
+      if (this.options.xOrder === 'asc') {
+        _.sortBy(this.X);
+      } else {
+        _.sortBy(this.X);
+        _.reverse(this.X);
+      }
+    }
+    if (this.options.yOrder) {
+      if (this.options.yOrder === 'asc') {
+        _.sortBy(this.Y);
+      } else {
+        _.sortBy(this.Y);
+        _.reverse(this.Y);
+      }
+    }
   }
 
   readLines(): void {
@@ -69,13 +88,6 @@ class MatrixBuilder {
       [null, ...this.X],
       ...this.matrix.map((it, index) => [this.Y[index], ...it])
     ];
-  }
-
-  get sortedData(): MatrixData {
-    return _.orderBy(this.source, [
-      [this.options.y, this.options.yOrder],
-      [this.options.x, this.options.xOrder]
-    ]);
   }
 }
 
