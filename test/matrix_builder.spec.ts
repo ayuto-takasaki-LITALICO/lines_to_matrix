@@ -24,17 +24,14 @@ const optionsFactory = () => {
 
 describe("MatrixBuilder", () => {
   describe("build", () => {
-    describe("デフォルトのオプションの挙動", () => {
-      it("", () => {
-        expect(
-          new MatrixBuilder(sourceFactory(), optionsFactory()).build()
-        ).toEqual([
-          [null, "C", "A", "B"],
-          ["2019-11-10", "200", "100", ""],
-          ["2019-11-05", "", "", "50"],
-          ["2019-12-15", "150", "250", "300"]
-        ]);
-      });
+    it("デフォルトのオプションの挙動", () => {
+      const options = optionsFactory();
+      expect(new MatrixBuilder(sourceFactory(), options).build()).toEqual([
+        [null, "C", "A", "B"],
+        ["2019-11-10", "200", "100", ""],
+        ["2019-11-05", "", "", "50"],
+        ["2019-12-15", "150", "250", "300"]
+      ]);
     });
   });
 });
