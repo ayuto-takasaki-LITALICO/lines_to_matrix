@@ -56,13 +56,13 @@ cat lines.csv | l2m
 1列目を縦軸に、2列目を横軸に、4列目を値に指定したい場合：
 
 ```
-l2m --y-position 0 --x-position 1 --value-position 3 sample.csv
+l2m --y-position 0 --x-position 1 --value-position 3 lines.csv
 ```
 
 省略形式：
 
 ```
-l2m -y 0 -x 1 -v 3 sample.csv
+l2m -y 0 -x 1 -v 3 lines.csv
 ```
 
 ### 並び替え
@@ -70,7 +70,7 @@ l2m -y 0 -x 1 -v 3 sample.csv
 縦軸は降順に、横軸は昇順に並び替える場合：
 
 ```
-l2m --y-order desc --x-order asc sample.csv
+l2m --y-order desc --x-order asc lines.csv
 ```
 
 ### N/A値の扱い
@@ -78,7 +78,7 @@ l2m --y-order desc --x-order asc sample.csv
 該当値の存在しない箇所を特定の文字列（例： `NA` ）にしたい場合：
 
 ```
-l2m --na-as NA sample.csv
+l2m --na-as NA lines.csv
 ```
 
 ## 開発
