@@ -57,5 +57,29 @@ describe("MatrixBuilder", () => {
         ]);
       });
     });
+
+    describe("横方向のソートのテスト", () => {
+      it("ascの挙動", () => {
+        const options = optionsFactory();
+        options.xOrder = "asc";
+        expect(new MatrixBuilder(sourceFactory(), options).build()).toEqual([
+          [null, "A", "B", "C"],
+          ["2019-11-10", "100", "", "200"],
+          ["2019-11-05", "", "50", ""],
+          ["2019-12-15", "250", "300", "150"]
+        ]);
+      });
+
+      it("descの挙動", () => {
+        const options = optionsFactory();
+        options.xOrder = "desc";
+        expect(new MatrixBuilder(sourceFactory(), options).build()).toEqual([
+          [null, "C", "B", "A"],
+          ["2019-11-10", "200", "", "100"],
+          ["2019-11-05", "", "50", ""],
+          ["2019-12-15", "150", "300", "250"]
+        ]);
+      });
+    });
   });
 });
