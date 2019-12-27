@@ -1,4 +1,4 @@
-import { MatrixBuilder } from "../src/matrix_builder";
+import { MatrixBuilder, MatrixBuilderOptions } from "../src/matrix_builder";
 
 const sourceFactory = () => {
   return [
@@ -19,7 +19,7 @@ const optionsFactory = () => {
     xOrder: null,
     yOrder: null,
     naAs: ""
-  };
+  } as MatrixBuilderOptions;
 };
 
 describe("MatrixBuilder", () => {
@@ -32,6 +32,30 @@ describe("MatrixBuilder", () => {
         ["2019-11-05", "", "", "50"],
         ["2019-12-15", "150", "250", "300"]
       ]);
+    });
+
+    describe("縦方向のソートのテスト", () => {
+      it("ascの挙動", () => {
+        const options = optionsFactory();
+        options.yOrder = "asc";
+        expect(new MatrixBuilder(sourceFactory(), options).build()).toEqual([
+          [null, "C", "A", "B"],
+          ["2019-11-05", "", "", "50"],
+          ["2019-11-10", "200", "100", ""],
+          ["2019-12-15", "150", "250", "300"]
+        ]);
+      });
+
+      it("descの挙動", () => {
+        const options = optionsFactory();
+        options.yOrder = "desc";
+        expect(new MatrixBuilder(sourceFactory(), options).build()).toEqual([
+          [null, "C", "A", "B"],
+          ["2019-12-15", "150", "250", "300"],
+          ["2019-11-10", "200", "100", ""],
+          ["2019-11-05", "", "", "50"]
+        ]);
+      });
     });
   });
 });
