@@ -94,5 +94,16 @@ describe("MatrixBuilder", () => {
         ["B", "", "red", "green"]
       ]);
     });
+
+    it("naAsの値を変えた場合", () => {
+      const options = optionsFactory();
+      options.naAs = "N/A";
+      expect(new MatrixBuilder(sourceFactory(), options).build()).toEqual([
+        [null, "C", "A", "B"],
+        ["2019-11-10", "200", "100", "N/A"],
+        ["2019-11-05", "N/A", "N/A", "50"],
+        ["2019-12-15", "150", "250", "300"]
+      ]);
+    });
   });
 });
