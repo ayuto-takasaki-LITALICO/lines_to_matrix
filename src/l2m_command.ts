@@ -47,12 +47,16 @@ export const createL2mCommand = (): commander.Command => {
     .arguments("<file>");
 };
 
-export const importSource = async (
-  program: commander.Command
-): Promise<any[][]> => {
+export const readCsv = (program: commander.Command): Promise<string> => {
   const fileName: string = program.args[0];
+  return readFromFileOrStdin(fileName);
+};
+
+export const parseCsv = async (
+  program: commander.Command,
+  content: string
+): Promise<any[][]> => {
   const fromLine = Number(program.fromLine);
-  const content = await readFromFileOrStdin(fileName);
   return importCsvAsync(content, { fromLine: fromLine });
 };
 
