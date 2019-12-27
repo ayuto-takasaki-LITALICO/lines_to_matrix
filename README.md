@@ -82,10 +82,13 @@ l2m --na-as NA sample.csv
 ```
 
 ## 開発
+```
+npm install
+```
 
 ### ビルド
 ```
-npx tsc
+npm run build
 ```
 
 ### テスト
