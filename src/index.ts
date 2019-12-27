@@ -1,7 +1,8 @@
 import { MatrixBuilder } from "./matrix_builder";
 import {
   createL2mCommand,
-  importSource,
+  readCsv,
+  parseCsv,
   commandToOptions
 } from "./l2m_command";
 import { exportCsvAsync } from "./utils/csv_utils";
@@ -11,7 +12,7 @@ import { exportCsvAsync } from "./utils/csv_utils";
   process.stdout.write(
     await exportCsvAsync(
       new MatrixBuilder(
-        await importSource(program),
+        await parseCsv(program, await readCsv(program)),
         commandToOptions(program)
       ).build()
     )
