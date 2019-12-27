@@ -31,7 +31,7 @@ const readFromFileOrStdin = async (fileName: string): Promise<string> => {
     : (await readAllLinesAsync()).join("\n");
 };
 
-const initL2mCommand = (): commander.Command => {
+const createL2mCommand = (): commander.Command => {
   return new commander.Command()
     .name("l2m")
     .usage("[options] <file>")
@@ -83,7 +83,7 @@ const importCsv = async (program: commander.Command): Promise<any[][]> => {
   return parseCsvAsync(content, { from_line: fromLine });
 };
 
-const commanderProgramToOptions = (program: commander.Command) => {
+const commandToOptions = (program: commander.Command) => {
   return {
     yPosition: Number(program.yPosition),
     xPosition: Number(program.xPosition),
@@ -95,10 +95,10 @@ const commanderProgramToOptions = (program: commander.Command) => {
 };
 
 (async function main() {
-  const program = initL2mCommand().parse(process.argv);
+  const program = createL2mCommand().parse(process.argv);
   const matrix = new MatrixBuilder(
     await importCsv(program),
-    commanderProgramToOptions(program)
+    commandToOptions(program)
   ).build();
   const result = await stringifyCsvAsync(matrix);
   process.stdout.write(result);
