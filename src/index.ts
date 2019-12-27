@@ -12,9 +12,9 @@ type MatrixCellData = string | number | boolean | null;
 type MatrixRowData = MatrixCellData[];
 type MatrixData = MatrixRowData[];
 type MatrixBuilderOptions = {
-  y: number;
-  x: number;
-  v: number;
+  yPosition: number;
+  xPosition: number;
+  valuePosition: number;
   xOrder?: Order;
   yOrder?: Order;
   naAs: string;
@@ -48,8 +48,8 @@ class MatrixBuilder {
   }
 
   init(): void {
-    this.X = _.uniq(_.map(this.source, this.options.x));
-    this.Y = _.uniq(_.map(this.source, this.options.y));
+    this.X = _.uniq(_.map(this.source, this.options.xPosition));
+    this.Y = _.uniq(_.map(this.source, this.options.yPosition));
     this.matrix = _.times(this.Y.length, () =>
       new Array(this.X.length).fill(this.options.naAs)
     );
@@ -76,9 +76,9 @@ class MatrixBuilder {
 
   readLines(): void {
     this.source.forEach(row => {
-      const yTitle = row[this.options.y];
-      const xTitle = row[this.options.x];
-      const value = row[this.options.v];
+      const yTitle = row[this.options.yPosition];
+      const xTitle = row[this.options.xPosition];
+      const value = row[this.options.valuePosition];
       this.matrix[this.Y.indexOf(yTitle)][this.X.indexOf(xTitle)] = value;
     });
   }
@@ -96,9 +96,9 @@ class MatrixBuilder {
   const content = await readFileAsync(path, "utf8");
   const csvLines = await parseCsvAsync(content);
   const matrix = new MatrixBuilder(csvLines, {
-    y: 0,
-    x: 1,
-    v: 2,
+    yPosition: 0,
+    xPosition: 1,
+    valuePosition: 2,
     xOrder: "asc",
     yOrder: "asc",
     naAs: ""
