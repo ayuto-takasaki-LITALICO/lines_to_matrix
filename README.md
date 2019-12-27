@@ -2,7 +2,7 @@
 
 ## 概要
 
-各行から行と列の集合と対応する値を抽出して、行列状に出力します。
+各行から行と列の集合と対応する値を抽出して、行列状に出力します。
 
 入力例
 
@@ -56,7 +56,13 @@ cat lines.csv | l2m > matrix.csv
 1列目を縦軸に、2列目を横軸に、4列目を値に指定したい場合：
 
 ```
-l2m -y 1 -x 2 -v 4 sample.csv
+l2m --y-position 0 --x-position 1 --value-position 3 sample.csv
+```
+
+省略形式：
+
+```
+l2m -y 0 -x 1 -v 3 sample.csv
 ```
 
 ### 並び替え
@@ -65,12 +71,6 @@ l2m -y 1 -x 2 -v 4 sample.csv
 
 ```
 l2m --y-order desc --x-order asc sample.csv
-```
-
-省略形式：
-
-```
-l2m -yo desc -xo asc sample.csv
 ```
 
 ### N/A値の扱い
