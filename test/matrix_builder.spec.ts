@@ -4,7 +4,7 @@ const sourceFactory = () => {
   return [
     ["2019-11-10", "C", "200", "white"],
     ["2019-11-10", "A", "100", "black"],
-    ["2019-11-05", "B", "50", "read"],
+    ["2019-11-05", "B", "50", "red"],
     ["2019-12-15", "C", "150", "blue"],
     ["2019-12-15", "A", "250", "yellow"],
     ["2019-12-15", "B", "300", "green"]
@@ -80,6 +80,19 @@ describe("MatrixBuilder", () => {
           ["2019-12-15", "150", "300", "250"]
         ]);
       });
+    });
+
+    it("yPosition, yPosition, valuePositionの値を変えた場合", () => {
+      const options = optionsFactory();
+      options.yPosition = 1;
+      options.xPosition = 0;
+      options.valuePosition = 3;
+      expect(new MatrixBuilder(sourceFactory(), options).build()).toEqual([
+        [null, "2019-11-10", "2019-11-05", "2019-12-15"],
+        ["C", "white", "", "blue"],
+        ["A", "black", "", "yellow"],
+        ["B", "", "red", "green"]
+      ]);
     });
   });
 });
