@@ -14,13 +14,13 @@ export const createL2mCommand = (): commander.Command => {
       "0"
     )
     .option(
-      "-x, --x-position, <position>",
+      "-x, --x-position <position>",
       "横方向のラベルを表す列の位置を指定します",
       /^\d+$/i,
       "1"
     )
     .option(
-      "-v, --value-position, <position>",
+      "-v, --value-position <position>",
       "値を表す列の位置を指定します",
       /^\d+$/i,
       "2"
