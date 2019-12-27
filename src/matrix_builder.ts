@@ -49,18 +49,14 @@ export class MatrixBuilder {
 
   sortLabels(): void {
     if (this.options.xOrder) {
-      if (this.options.xOrder === "asc") {
-        _.sortBy(this.X);
-      } else {
-        _.sortBy(this.X);
+      this.X = _.sortBy(this.X);
+      if (this.options.xOrder === "desc") {
         _.reverse(this.X);
       }
     }
     if (this.options.yOrder) {
-      if (this.options.yOrder === "asc") {
-        _.sortBy(this.Y);
-      } else {
-        _.sortBy(this.Y);
+      this.Y = _.sortBy(this.Y);
+      if (this.options.yOrder === "desc") {
         _.reverse(this.Y);
       }
     }
