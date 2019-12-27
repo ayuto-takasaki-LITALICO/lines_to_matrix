@@ -1,6 +1,6 @@
 {
   "name": "l2m",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "各行から行と列の集合と対応する値を抽出して、行列状に出力します。",
   "main": "dist/index.js",
   "scripts": {
