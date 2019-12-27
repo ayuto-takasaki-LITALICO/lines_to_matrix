@@ -25,6 +25,12 @@ const readAllLinesAsync = (): Promise<string[]> => {
   });
 };
 
+const readFromFileOrStdin = async (fileName: string): Promise<string> => {
+  return fileName
+    ? readFileAsync(fileName, "utf8")
+    : (await readAllLinesAsync()).join("\n");
+};
+
 const initL2mCommand = (): commander.Command => {
   return new commander.Command()
     .name("l2m")
@@ -70,13 +76,10 @@ const initL2mCommand = (): commander.Command => {
     .arguments("<file>");
 };
 
-const importCsv = async (
-  fileName: string,
-  { fromLine = 1 } = {}
-): Promise<any[][]> => {
-  const content = fileName
-    ? await readFileAsync(fileName, "utf8")
-    : (await readAllLinesAsync()).join("\n");
+const importCsv = async (program: commander.Command): Promise<any[][]> => {
+  const fileName = program.args[0];
+  const fromLine = Number(program.fromLine);
+  const content = await readFromFileOrStdin(fileName);
   return parseCsvAsync(content, { from_line: fromLine });
 };
 
@@ -91,15 +94,12 @@ const commanderProgramToOptions = (program: commander.Command) => {
   };
 };
 
-async function main() {
+(async function main() {
   const program = initL2mCommand().parse(process.argv);
-  const fileName = program.args[0];
-  const fromLine = Number(program.fromLine);
   const matrix = new MatrixBuilder(
-    await importCsv(fileName, { fromLine }),
+    await importCsv(program),
     commanderProgramToOptions(program)
   ).build();
   const result = await stringifyCsvAsync(matrix);
   process.stdout.write(result);
-}
-main();
+})();
