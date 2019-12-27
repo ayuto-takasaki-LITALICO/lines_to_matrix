@@ -1,25 +1,19 @@
-import stringify from "csv-stringify";
-import parse from "csv-parse";
-import fs from "fs";
-import util from "util";
 import { MatrixBuilder } from "./matrix_builder";
-
-const readFileAsync = util.promisify(fs.readFile);
-const parseCsvAsync = util.promisify<any, any>(parse);
-const stringifyCsvAsync = util.promisify<any, any>(stringify);
+import {
+  createL2mCommand,
+  importSource,
+  commandToOptions
+} from "./l2m_command";
+import { exportCsvAsync } from "./utils/csv_utils";
 
 (async function main() {
-  const path = process.argv[2];
-  const content = await readFileAsync(path, "utf8");
-  const csvLines = await parseCsvAsync(content);
-  const matrix = new MatrixBuilder(csvLines, {
-    yPosition: 0,
-    xPosition: 1,
-    valuePosition: 2,
-    xOrder: "asc",
-    yOrder: "asc",
-    naAs: ""
-  }).build();
-  const result = await stringifyCsvAsync(matrix);
-  process.stdout.write(result);
+  const program = createL2mCommand().parse(process.argv);
+  process.stdout.write(
+    await exportCsvAsync(
+      new MatrixBuilder(
+        await importSource(program),
+        commandToOptions(program)
+      ).build()
+    )
+  );
 })();
