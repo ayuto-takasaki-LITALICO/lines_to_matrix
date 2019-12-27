@@ -15,5 +15,23 @@ module.exports = {
     ecmaVersion: 2018
   },
   plugins: ["@typescript-eslint"],
-  rules: {}
+  rules: {
+    "import/extensions": [ // import/extensions のエラー対応
+      "error",
+      "ignorePackages",
+      {
+        js: "never",
+        jsx: "never",
+        ts: "never",
+        tsx: "never"
+      }
+    ]
+  },
+  settings: {
+    "import/resolver": { // import/no-unresolved のエラー対応
+      node: {
+        extensions: [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  }
 };
