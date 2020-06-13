@@ -3,35 +3,42 @@ module.exports = {
     browser: true,
     commonjs: true,
     es6: true,
-    jest: true
+    jest: true,
   },
-  extends: ["airbnb-base", "prettier"],
+  extends: [
+    "airbnb-base",
+    "prettier",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+  ],
   globals: {
     Atomics: "readonly",
-    SharedArrayBuffer: "readonly"
+    SharedArrayBuffer: "readonly",
   },
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    ecmaVersion: 2018
+    ecmaVersion: 2018,
   },
   plugins: ["@typescript-eslint"],
   rules: {
-    "import/extensions": [ // import/extensions のエラー対応
+    "import/extensions": [
+      // import/extensions のエラー対応
       "error",
       "ignorePackages",
       {
         js: "never",
         jsx: "never",
         ts: "never",
-        tsx: "never"
-      }
-    ]
+        tsx: "never",
+      },
+    ],
   },
   settings: {
-    "import/resolver": { // import/no-unresolved のエラー対応
+    "import/resolver": {
+      // import/no-unresolved のエラー対応
       node: {
-        extensions: [".js", ".jsx", ".ts", ".tsx"]
-      }
-    }
-  }
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
+      },
+    },
+  },
 };

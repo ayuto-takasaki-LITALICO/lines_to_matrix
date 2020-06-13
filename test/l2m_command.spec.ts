@@ -3,6 +3,7 @@ import {
   parseCsv,
   commandToOptions
 } from "../src/l2m_command";
+// eslint-disable-next-line import/order
 import commander = require("commander");
 
 const argumentsFactory = (args: string[]): string[] => {

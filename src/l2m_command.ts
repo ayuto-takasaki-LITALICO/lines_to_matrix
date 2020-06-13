@@ -1,6 +1,7 @@
 import commander from "commander";
 import { readFromFileOrStdin } from "./utils/read_from_file_or_stdin";
 import { importCsvAsync } from "./utils/csv_utils";
+import { MatrixBuilderOptions } from "./matrix_builder";
 
 export const createL2mCommand = (): commander.Command => {
   return new commander.Command()
@@ -55,12 +56,13 @@ export const readCsv = (program: commander.Command): Promise<string> => {
 export const parseCsv = async (
   program: commander.Command,
   content: string
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 ): Promise<any[][]> => {
   const fromLine = Number(program.fromLine);
-  return importCsvAsync(content, { fromLine: fromLine });
+  return importCsvAsync(content, { fromLine });
 };
 
-export const commandToOptions = (program: commander.Command) => {
+export const commandToOptions = (program: commander.Command): MatrixBuilderOptions => {
   return {
     yPosition: Number(program.yPosition),
     xPosition: Number(program.xPosition),
