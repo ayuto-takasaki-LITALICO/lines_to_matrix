@@ -57,7 +57,7 @@ export const parseCsv = async (
   content: string
 ): Promise<any[][]> => {
   const fromLine = Number(program.fromLine);
-  return importCsvAsync(content, { fromLine: fromLine });
+  return importCsvAsync(content, { fromLine });
 };
 
 export const commandToOptions = (program: commander.Command) => {
