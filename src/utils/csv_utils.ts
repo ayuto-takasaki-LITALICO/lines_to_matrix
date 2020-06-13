@@ -14,5 +14,6 @@ export const importCsvAsync = (
   options: ImportCsvOptions
 ): Promise<any[][]> => parseCsvAsync(content, { from_line: options.fromLine });
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const exportCsvAsync = (content: any): Promise<string> =>
   stringifyCsvAsync(content);
